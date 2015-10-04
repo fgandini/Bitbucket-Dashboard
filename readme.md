@@ -19,6 +19,3 @@ Oohhh, it's gonna be hard...just open index.html!
 feel free to download, comment and commit.**
 
 ##### enjoy!
-
-
--- resoucers 
