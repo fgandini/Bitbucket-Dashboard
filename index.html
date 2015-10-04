@@ -1,0 +1,183 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+	<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="assets/js/functions.js"></script>	
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+	
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
+	
+	
+    <title>Bitbucket Dashboard</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <style type="text/css">
+		.number {
+			color: #63ace5;
+			display: block;
+			font-size: 28px;
+			font-weight: bold;
+			line-height: 1;
+			text-decoration:none
+		}
+		
+		.legend {
+			font-size: 11px;
+			color: #767676;
+			display: block;
+		}
+
+		.avatar {
+			height:170px;
+			width:170px;
+			border-radius:50%;
+			overflow:hidden;
+			margin:auto;
+		}
+		
+		.mini-avatar {
+			height:60px;
+			width:60px;
+			border-radius:50%;
+			-webkit-filter: grayscale(1) opacity(0.6) !important;
+			margin:10px;
+			transition: all 0.3s ease 0s;
+		}
+		
+		.mini-avatar-hover {
+			-webkit-filter: none !important;
+		}
+		
+		.loader{
+			position: relative;
+			height: 80px;
+			width: 80px;
+			border-radius: 80px;
+			border: 3px solid  rgba(99,172,229, .7);
+			top: 28%;			
+			left: 35%;			
+			-webkit-animation: loader 3s linear infinite;					
+		}
+
+		.loader:after{
+			content: "";
+			position: absolute;
+			top: -5px;
+			left: 20px;
+			width: 11px;
+			height: 11px;
+			border-radius: 10px;
+			background-color: #63ace5;
+		}
+
+		@-webkit-keyframes loader{
+			0%{-webkit-transform:rotate(0deg);}
+			100%{-webkit-transform:rotate(360deg);}
+		}
+
+		@keyframes loader{
+			0%{transform:rotate(0deg);}
+			100%{transform:rotate(360deg);}
+		}
+	
+	
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Bitbucket Dashboard</a>	
+			</div>
+		</div>
+    </div>
+    <div class="container">
+        <section style="padding-bottom: 50px; padding-top: 50px;">
+            <div class="row">
+                <div class="col-md-2">
+					<div>
+						<img src="./assets/img/avatar.png" id="avatar" class="avatar" />
+						<br />
+						<br />
+					</div>
+					<div id="div_login">
+						<label>Team Name</label>
+						<input type="text" class="form-control" id="teamname" placeholder="Team name">
+						<label>User</label>
+						<input type="text" class="form-control" id="user" placeholder="User">
+						<label>Password</label>
+						<input type="password" class="form-control" id="password" placeholder="password">
+						</br>
+					</div>
+					<div>						
+						<a href="#" type="submit" class="btn btn-success" id="go_edit_buttom" onClick="validateEditUser()">Go!</a>
+						</br>
+						</br>						
+					</div>
+					<div id="teammates" style="display:none">
+						<h4 style="color: #6A99E0;">Teammates</h4>
+						<hr class="separator" style="width: 100%; color: #8E8E8E; height: 1px; background-color: #6A99E0; margin-top: 1px; margin-bottom: 1px">								
+						<div id="mini_avatar_container"></div>					
+					</div>
+				</div>
+                <div class="col-md-10">
+					<div class="row">
+						<div class="loader" style="display: none"></div>
+					</div>
+					<div class="row" id="userInfos" style="display: none">
+						<div class="col-md-6">
+							<h2 id="display_user_name"></h2>
+							<h4 id="display_user_login" style="color: #c4c4c4"></h4>   
+							</br>									
+						</div>
+						<!--switch button from http://www.bootstrap-switch.org/ -->
+						<div class="col-md-3" style="text-align:-webkit-center; padding-top:3%">
+							<span class="legend text-center" >Count the lines of diffs files may break your browser, wanna try?</span>
+							<br />		
+							<input id="read_lines_button" type="checkbox" data-toggle="toggle" data-width="80" data-size="small" data-on="Yeahhh!" data-off="No way!" data-style="android" data-onstyle="info">						
+							<br/>
+						</div>	
+						<hr  style="width: 100%; color: #8E8E8E; height: 1px; background-color: #C7C7C7;">					
+					</div>
+					<div class="row" id="commitsInfos" style="display: none">					
+						<div class="col-md-3">							
+							<span class="number text-center" id="number_commits">0</span>
+							<span class="legend text-center">Total commits</span>
+							<br />
+						</div>											
+						<div class="col-md-3" name="diff_lines" style="display: none">							
+							<span class="number text-center" id="number_deleted_lines">0</span>
+							<span class="legend text-center">Total of deleted lines</span>
+							<span class="legend text-center" name="counting"><em>...Counting</em></span>
+							<br />
+						</div>
+						<div class="col-md-3" name="diff_lines" style="display: none">							
+							<span class="number text-center" id="number_added_lines">0</span>
+							<span class="legend text-center">Total of added lines</span>
+							<span class="legend text-center" name="counting"><em>...Counting</em></span>
+							<br />
+						</div>		
+					</div>
+					<div class="row" id="graph" style="display: none">
+						 <div class="col-md-10">	
+							 <div class="panel panel-default">
+								 <div class="panel-heading">
+									<h3 class="panel-title">Contributions</h3>
+								</div>									
+								<div class="panel-body" id="painelBody"style="height:200">
+									<div id="calendar_basic"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </section>
+    </div>
+	
+</body>
+
+</html>
