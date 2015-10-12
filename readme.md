@@ -3,6 +3,8 @@ Is a simple way to visualize your commits just like github does, cause you know,
 
 If you work in a team, the dashboard will show all your teammates and you will be able to visualize them info too.
 
+![alt tag](http://s17.postimg.org/jye8pana7/BBDashboard_1.jpg "Bitbucket Dashboard example.")
+
 ## What do you need?
  - Modern browser
  
