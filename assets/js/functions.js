@@ -366,6 +366,9 @@ function getInFocusUser() {
 
 function countCommitsByRepository(inFocusUser) {
 	this.inFocusUser = inFocusUser;
+	if (Object.keys(this.inFocusUser.repository[0].totalCommitsByDate).length > 0) {
+		return;
+	}
 	for (i = 0; i < this.inFocusUser.repository.length; ++i) {
 		for (c = 0; c < this.inFocusUser.repository[i].commits.length; ++c) {
 			if (!this.inFocusUser.repository[i].totalCommitsByDate[this.inFocusUser.repository[i].commits[c].date]) {
