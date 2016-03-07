@@ -1,6 +1,4 @@
-google.load('visualization', '1.1', {
-	packages: ['calendar']
-});
+google.charts.load('current', {packages: ['calendar']});
 
 $(document).on('mouseover', '.mini-avatar', function() {
 	$('[data-toggle="tooltip"]').tooltip(); 
