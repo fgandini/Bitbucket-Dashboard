@@ -445,15 +445,15 @@ function getGraphSize(inFocusUser) {
 	var justYears = [];
 	
 	for (r = 0; r < this.inFocusUser.repository.length; ++r) {		
-		for (c = 0; c < this.inFocusUser.repository[r].totalCommitsByDate.length; ++c) {
-			var year = this.inFocusUser.repository[r].totalCommitsByDate[c].split(', ')[0];
+		for (x in this.inFocusUser.repository[r].totalCommitsByDate) {
+			var year = x.split(', ')[0];
 		
-			if (justYears.indexOf(year) >= 0 ) {
+			if (justYears.indexOf(year) < 0 ) {
 				justYears.push(year);
 			}
 		}
 	}
-	return (justYears.length * 115) + 150;	
+	return (justYears.length * 125);	
 }
 
 function changeAvatar(inFocusUser) {
